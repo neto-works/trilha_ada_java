@@ -3,9 +3,10 @@ package org.example;
 import org.example.padroes.builder.Pessoa;
 import org.example.padroes.builder.PessoaBuilder;
 import org.example.padroes.builder.PessoaComBuilder;
+import org.example.padroes.factory.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void padraobuilder(String[] args) {
         // builder é um padrão que
         // - resolve dependencia de ordenação de parametragem
         Pessoa p = new Pessoa( "nome",  "sobreNome",  "documento",  "apelido",  "email",  "dataNascimento");
@@ -35,5 +36,34 @@ public class Main {
 
         /* Obs: esse builder criado é o mesmo é o mesmo utilizado pela anotação do lombok
         * a diferença fica quanto a nomenclatura que padrão la .builder() o metodo de criação */
+    }
+    public static void main(String[] args) {
+        /*
+            Padrão Fabrica
+            - ja diz em sí objeto que sabe fabricar, fabrica instancias.
+
+            Sempre que tivermos  a responsabilidade de informar na classe que uma coisa é de determinado tipo
+            a gente pode alterar a modelagem das classes, fazendo assim a aplicação do Factory methods
+            - criamos uma classe Enum - com a definição de ambos os tipos
+            - criamos uma classe Factory Method - com a definição e criação de tipos
+            - chamamos o metodo staic do produtfactory passando o tipo do produto,
+            - E então é criado um produto de acordo com a tipagem
+
+            ** Obs: ganhos em inversão de responsabilidade, evitando erros
+        */
+
+        /*  Em vez de:
+            ProdutoFisico pf = new ProdutoFisico();  "Caneta", 8.656,true);
+            pf.setPosuiDimensoesFisicas(true);
+            ProdutoDigital pd = new ProdutoDigital(); "Lapis", 10.656,true);
+            pf.setPosuiDimensoesFisicas(false);
+        */
+
+        Produto pd = ProdutoFactory.getInstance(TipoProdutoEnum.DIGITAL);
+        Produto pf = ProdutoFactory.getInstance(TipoProdutoEnum.FISICO);
+
+        System.out.println(pd);
+        System.out.println(pf);
+
     }
 }
