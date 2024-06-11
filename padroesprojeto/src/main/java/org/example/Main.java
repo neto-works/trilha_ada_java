@@ -4,6 +4,8 @@ import org.example.padroes.builder.Pessoa;
 import org.example.padroes.builder.PessoaBuilder;
 import org.example.padroes.builder.PessoaComBuilder;
 import org.example.padroes.factory.*;
+import org.example.padroes.singleton.Agenda;
+import org.example.padroes.singleton.AgendaSingletonEAGER;
 
 public class Main {
     public static void padraobuilder(String[] args) {
@@ -37,7 +39,7 @@ public class Main {
         /* Obs: esse builder criado é o mesmo é o mesmo utilizado pela anotação do lombok
         * a diferença fica quanto a nomenclatura que padrão la .builder() o metodo de criação */
     }
-    public static void main(String[] args) {
+    public static void padraoFactory(String[] args) {
         /*
             Padrão Fabrica
             - ja diz em sí objeto que sabe fabricar, fabrica instancias.
@@ -66,4 +68,34 @@ public class Main {
         System.out.println(pf);
 
     }
+
+    public static  void reservaDia(String dia){
+        Agenda agenda = new Agenda();
+        agenda.ocupa(dia);
+        System.out.println(agenda.getDias());
+    }
+    public static  void reservaDiaSingleton(String dia){
+        AgendaSingletonEAGER agenda = AgendaSingletonEAGER.getInstance();
+        agenda.ocupa(dia);
+        System.out.println(agenda.getDias());
+    }
+    public static void main(String[] args) {
+        /* Singleton - O objetivo dele é garantir que exista somente uma instancia de algo na memoria
+        * - Problema ocorrendo , estamos gerando mais de 1 instancia da mesma classe "Agenda" e com
+        * isso perdemos o estado  dos dias anteriores que foram reservados --> "quando chamamos o reservarDia".
+        *
+        * Solução: usar o singleton e garantir que a a classe seja instanciada uma unica vez e permaneça na memoria
+        * - criamos um atributo da classe que é uma instancia
+        * - criamos um metodo que retorna a propria instancia da classe
+        * */
+        //reservaDia("Sexta");
+        //reservaDia("Sabado");
+
+        reservaDiaSingleton("Sexta");
+        reservaDiaSingleton("Sabado");
+        reservaDiaSingleton("Domingo");
+
+
+    }
+
 }
